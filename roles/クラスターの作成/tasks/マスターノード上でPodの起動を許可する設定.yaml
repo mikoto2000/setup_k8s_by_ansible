@@ -1,0 +1,7 @@
+- name: マスターノード上で Pod の起動を許可する設定
+  block:
+  - name: マスターノード上で Pod の起動を許可する設定
+    become: no
+    shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+    ignore_errors: yes
+

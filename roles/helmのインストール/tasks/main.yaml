@@ -1,0 +1,18 @@
+- name: helmのインストール
+  block:
+  - name: apt-transport-https パッケージのインストール
+    apt:
+      name:
+        - apt-transport-https
+  - name: Helm のリポジトリの GPG 鍵を追加
+    ansible.builtin.apt_key:
+      url: https://helm.baltorepo.com/organization/signing.asc
+      state: present
+  - name: Add apt repository
+    apt_repository:
+      repo: "deb https://baltocdn.com/helm/stable/debian/ all main"
+  - name: helm パッケージのインストール
+    apt:
+      name:
+        - helm
+

@@ -6,3 +6,6 @@
   - containerdのインストール
   - kubeadm、kubelet、kubectlパッケージのインストール
   - クラスターの作成
+  - helmのインストール
+  - ingressのインストール
+  - metallbのインストール

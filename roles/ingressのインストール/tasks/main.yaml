@@ -1,0 +1,18 @@
+- name: ingressのインストール
+  block:
+  - name: Add a Ingress repository
+    become: no
+    kubernetes.core.helm_repository:
+      name: ingress-nginx
+      repo_url: https://kubernetes.github.io/ingress-nginx
+  - name: ingress のデプロイ
+    become: no
+    kubernetes.core.helm:
+      name: ingress-nginx
+      chart_ref: ingress-nginx/ingress-nginx
+      release_namespace: ingres-nginx
+      create_namespace: true
+      values:
+        controller:
+          hostNetwork: true
+

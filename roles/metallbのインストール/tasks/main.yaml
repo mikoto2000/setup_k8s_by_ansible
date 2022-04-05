@@ -1,0 +1,25 @@
+- name: metallbのインストール
+  block:
+  - name: MetalLb 用 ConfigMap 作成
+    become: no
+    shell: >-
+      kubectl get configmap kube-proxy -n kube-system -o yaml | sed -e "s/strictARP: false/strictARP: true/" | kubectl apply -f - -n kube-system
+  - name: Add a MetalLB repository
+    become: no
+    kubernetes.core.helm_repository:
+      name: metallb
+      repo_url: https://metallb.github.io/metallb
+  - name: MetalLB のデプロイ
+    become: no
+    kubernetes.core.helm:
+      name: metallb
+      chart_ref: metallb/metallb
+      release_namespace: metallb-system
+      create_namespace: true
+      values:
+        configInline:
+          address-pools:
+           - name: default
+             protocol: layer2
+             addresses:
+             - 10.244.0.0/16

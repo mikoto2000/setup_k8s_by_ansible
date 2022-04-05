@@ -1,0 +1,3 @@
+[controlplane]
+HOST_FQDN ansible_ssh_user=ubuntu
+

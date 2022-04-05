@@ -1,0 +1,2 @@
+- import_tasks: 必要な設定の追加.yaml
+- import_tasks: containerdパッケージインストール.yaml

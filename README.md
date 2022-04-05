@@ -1,5 +1,7 @@
 # setup_k8s_by_ansible
 
+[Oracle Cloud Free Tier の Ampere A1 VM(ARM VM) に Kubernetes をインストールする - mikoto2000 の日記](https://mikoto2000.blogspot.com/2022/03/oracle-cloud-free-tier-ampere-a1-vmarm.html) の作業内容を Ansible で実現したもの。
+
 ## Usage:
 
 Fix `.env`, `hosts` and run `docker compose`.

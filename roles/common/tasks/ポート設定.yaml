@@ -1,0 +1,13 @@
+- name: ポート設定
+  block:
+  - name: iptables の設定ファイルをコピー
+    ansible.builtin.copy:
+      src: ./iptables/rules.v4
+      dest: /etc/iptables/rules.v4
+      owner: root
+      group: root
+      mode: 0755
+  - name: コピーした設定ファイルを適用
+    community.general.iptables_state:
+      state: restored
+      path: /etc/iptables/rules.v4

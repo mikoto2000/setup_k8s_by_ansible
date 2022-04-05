@@ -1,0 +1,24 @@
+- name: iptablesがnftablesバックエンドを使用しないようにする
+  block:
+  - name: 必須パッケージインストール
+    apt:
+      name:
+        - iptables
+        - arptables
+        - ebtables
+  - name: iptables-legacy を使用するように設定
+    community.general.alternatives:
+      name: iptables
+      path: /usr/sbin/iptables-legacy
+  - name: ip6tables-legacy を使用するように設定
+    community.general.alternatives:
+      name: ip6tables
+      path: /usr/sbin/ip6tables-legacy
+  - name: arptables-legacy を使用するように設定
+    community.general.alternatives:
+      name: arptables
+      path: /usr/sbin/arptables-legacy
+  - name: ebtables-legacy を使用するように設定
+    community.general.alternatives:
+      name: ebtables
+      path: /usr/sbin/ebtables-legacy

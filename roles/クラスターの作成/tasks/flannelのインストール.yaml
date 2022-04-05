@@ -1,14 +1,5 @@
 - name: flannelのインストール
   block:
-  - name: $HOME/k8s ディレクトリ作成
-    file:
-      path: "{{ lookup('env','HOME') }}/.k8s/"
-      state: directory
-      mode: '0755'
-      owner: "{{ ansible_env.SUDO_USER }}"
-      group: "{{ ansible_env.SUDO_USER }}"
-  - name: flannelのマニフェストダウンロードと apply.
-    ansible.builtin.get_url:
-      url: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-      dest: ~/k8s/kube-flannel.yml
-      mode: '0664'
+  - name: flannel のマニフェストを apply
+    become: no
+    shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml

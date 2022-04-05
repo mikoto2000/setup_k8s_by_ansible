@@ -8,6 +8,12 @@ Fix `.env`, `hosts` and run `docker compose`.
 docker compose run --rm ansible
 ```
 
+Run `ansible-playbook` command in container.
+
+```sh
+ansible-playbook -i hosts ./site.yaml
+```
+
 ## License:
 
 Copyright (C) 2022 mikoto2000

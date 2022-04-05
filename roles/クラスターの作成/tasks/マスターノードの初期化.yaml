@@ -1,0 +1,4 @@
+- name: マスターノードの初期化
+  block:
+  - name: マスターノードの初期化
+    shell: kubeadm init --pod-network-cidr=10.244.0.0/16

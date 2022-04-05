@@ -6,6 +6,7 @@
         - iptables
         - arptables
         - ebtables
+      update_cache: yes
   - name: iptables-legacy を使用するように設定
     community.general.alternatives:
       name: iptables

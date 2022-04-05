@@ -1,0 +1,34 @@
+- name: kubeadm-kubelet-kubectlパッケージのインストール
+  block:
+  - name: Google のリポジトリの GPG 鍵を追加
+    ansible.builtin.apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+  - name: Add apt repository(現状最新版が xenial までしかないので xenial を指定)
+    apt_repository:
+      repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+  - name: kubeadm、kubelet、kubectlパッケージのインストール
+    apt:
+      name:
+        - kubeadm
+        - kubelet
+        - kubectl
+- name: Hold kubeadm
+  dpkg_selections:
+    name: kubeadm
+    selection: hold
+- name: Hold kubelet
+  dpkg_selections:
+    name: kubelet
+    selection: hold
+- name: Hold kubectl
+  dpkg_selections:
+    name: kubectl
+    selection: hold
+- name: restart kubelet
+  systemd:
+    name: kubelet
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+

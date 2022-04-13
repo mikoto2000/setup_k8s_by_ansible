@@ -1,0 +1,22 @@
+- name: dockerパッケージインストール
+  block:
+  - name: 必須パッケージインストール
+    apt:
+      name:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+  - name: Docker のリポジトリの GPG 鍵を追加
+    ansible.builtin.apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  - name: Add apt repository
+    apt_repository:
+      repo: "deb [arch=arm64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+  - name: dockerパッケージのインストール
+    apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io

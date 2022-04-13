@@ -1,0 +1,6 @@
+- name: minikubeのインストール
+  block:
+  - name: minikubeインストール
+    apt:
+      deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_arm64.deb
+

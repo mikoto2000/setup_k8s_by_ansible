@@ -5,7 +5,7 @@
   - common
   - containerdのインストール
   - kubeadm、kubelet、kubectlパッケージのインストール
-  - クラスターの作成
+  - kubeadmクラスターの作成
   - helmのインストール
   - ingressのインストール
   - metallbのインストール

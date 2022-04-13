@@ -18,8 +18,16 @@ docker compose run --rm ansible
 
 Run `ansible-playbook` command in container.
 
+minikube ver.
+
 ```sh
-ansible-playbook -i hosts ./site.yaml
+ansible-playbook -i hosts ./minikube.yaml
+```
+
+kubeadm ver.
+
+```sh
+ansible-playbook -i hosts ./kubeadm.yaml
 ```
 
 ## License:

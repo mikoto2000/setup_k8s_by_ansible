@@ -1,0 +1,8 @@
+- name: マスターノードの初期化
+  block:
+  - name: マスターノードの作成
+    shell: minikube start --driver=none
+    ignore_errors: yes
+  - name: Ingress アドオンの有効化
+    shell: minikube addons enable ingress
+    ignore_errors: yes

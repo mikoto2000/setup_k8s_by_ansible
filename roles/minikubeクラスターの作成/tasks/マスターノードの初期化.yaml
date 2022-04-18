@@ -1,8 +1,23 @@
 - name: マスターノードの初期化
   block:
+  - name: docker グループへ追加
+    user:
+      name: ubuntu
+      groups: docker
+      append: yes
+  - name: SSH コネクションをリセット(newgrp docker の代わり)
+    ansible.builtin.meta:
+      reset_connection
   - name: マスターノードの作成
-    shell: minikube start --driver=none
+    shell: minikube start --driver=docker --cpus=4 --memory=20480
     ignore_errors: yes
+    become: no
   - name: Ingress アドオンの有効化
     shell: minikube addons enable ingress
     ignore_errors: yes
+    become: no
+  - name: kubectl を使えるようにする
+    lineinfile:
+      dest: ~/.bashrc
+      line: alias kubectl="minikube kubectl --"
+    become: no

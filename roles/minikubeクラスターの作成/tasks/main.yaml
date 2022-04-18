@@ -1,4 +1,3 @@
-- import_tasks: minikube_stopするための設定.yaml
 - import_tasks: minikubeのインストール.yaml
 - import_tasks: マスターノードの初期化.yaml
-- import_tasks: 設定ファイル群の準備.yaml
+- import_tasks: ポートフォワーディング.yaml

@@ -5,23 +5,9 @@
       declare -a dports=("80" "443")
       declare -a destinations=($(minikube service ingress-nginx-controller -n ingress-nginx --url | cut -d "/" -f 3))
       for (( i = 0; i < 2; i++ )) ; do
-        echo -A PREROUTING -i enp0s3 -p tcp -m tcp --dport ${dports[$i]} -j DNAT --to-destination ${destinations[$i]}
+        sudo iptables -t nat -A PREROUTING -p tcp -i enp0s3 --dport ${dports[$i]} -j DNAT --to-destination ${destinations[$i]}
       done;
     register: port_forwarding_setting
     args:
       executable: /bin/bash
     become: no
-  - name: iptables 設定ファイルへ追記
-    blockinfile:
-      dest: /etc/iptables/rules.v4
-      block: |
-        *nat
-        :PREROUTING ACCEPT [0:0]
-        :OUTPUT ACCEPT [0:0]
-        :POSTROUTING ACCEPT [0:0]
-        {{ port_forwarding_setting.stdout }}
-        COMMIT
-  - name: 更新した設定ファイルを適用
-    community.general.iptables_state:
-      state: restored
-      path: /etc/iptables/rules.v4

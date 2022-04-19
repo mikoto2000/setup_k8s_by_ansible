@@ -8,10 +8,24 @@
   - name: SSH コネクションをリセット(newgrp docker の代わり)
     ansible.builtin.meta:
       reset_connection
+  - name: マスターノードの状態確認
+    shell: minikube status
+    ignore_errors: yes
+    become: no
+    register: minikube_status
+  - name: debug var res_exists
+    debug:
+      msg: "minikube_status.rc: {{ minikube_status.rc }}"
   - name: マスターノードの作成
     shell: minikube start --driver=docker --cpus=4 --memory=20480
     ignore_errors: yes
     become: no
+    when: minikube_status.rc != 0 and minikube_status.rc != 7
+  - name: マスターノードの起動
+    shell: minikube start
+    ignore_errors: yes
+    become: no
+    when: minikube_status.rc == 7
   - name: Ingress アドオンの有効化
     shell: minikube addons enable ingress
     ignore_errors: yes

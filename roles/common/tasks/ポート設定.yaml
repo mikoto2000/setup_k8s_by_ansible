@@ -1,5 +1,12 @@
 - name: ポート設定
   block:
+  - name: iptables 設定ファイル格納ディレクトリ作成
+    file:
+      path: "/etc/iptables"
+      state: directory
+      owner: "root"
+      group: "root"
+      mode: "755"
   - name: 初期設定ファイルの有無確認
     stat:
       path: /etc/iptables/rules.v4.my

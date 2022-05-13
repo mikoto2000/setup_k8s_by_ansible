@@ -2,7 +2,7 @@
   block:
   - name: docker グループへ追加
     user:
-      name: ubuntu
+      name: "{{ ansible_env.SUDO_USER }}"
       groups: docker
       append: yes
   - name: SSH コネクションをリセット(newgrp docker の代わり)

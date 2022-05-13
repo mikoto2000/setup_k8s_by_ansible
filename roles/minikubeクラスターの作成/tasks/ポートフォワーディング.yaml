@@ -5,9 +5,21 @@
       declare -a dports=("80" "443")
       declare -a destinations=($(minikube service ingress-nginx-controller -n ingress-nginx --url | cut -d "/" -f 3))
       for (( i = 0; i < 2; i++ )) ; do
-        sudo iptables -t nat -A PREROUTING -p tcp -i enp0s3 --dport ${dports[$i]} -j DNAT --to-destination ${destinations[$i]}
+        echo "${dports[$i]} ${destinations[$i]}"
       done;
     register: port_forwarding_setting
     args:
       executable: /bin/bash
     become: no
+  - name: Ingress へのポートフォワード設定
+    ansible.builtin.iptables:
+      action: insert
+      rule_num: "1"
+      table: nat
+      chain: PREROUTING
+      protocol: tcp
+      match: tcp
+      destination_port: "{{ (item.split(' '))[0] }}"
+      jump: DNAT
+      to_destination: "{{ (item.split(' '))[1] }}"
+    with_items: "{{ port_forwarding_setting.stdout_lines }}"
